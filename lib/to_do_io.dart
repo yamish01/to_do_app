@@ -4,7 +4,7 @@ import "package:to_do_app/to_do_model.dart";
 
 import 'to_do_db.dart';
 
-class TOdoDbIO {
+class TodoDbIO {
   ToDoDb? databaseProvider;
   TodoDbIO() {
     databaseProvider = ToDoDb.instance;
@@ -29,9 +29,9 @@ class TOdoDbIO {
     });
   }
 
-  void updatTodo(ToDoModel toDoModel, int id) async {
+  void updateTodo(ToDoModel toDoModel, int id) async {
     Database? db = await databaseProvider!.database;
-    await db!.update(ToDoDb.instance.TodoTableName, toDoModel.toJson());
-        where: "id = ?", whereArgs: [toDoModel.id];
+    await db!.update(ToDoDb.instance.TodoTableName, toDoModel.toJson(),
+        where: " id = ? ", whereArgs: [id]);
   }
 }

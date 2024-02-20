@@ -1,11 +1,29 @@
 import 'package:flutter/material.dart';
 
-class toDoModel {
-  String? date;
+class ToDoModel {
+  int? id;
   String? task;
-  bool isCompleted = false;
-  toDoModel(this.date, String task) {
-    this.date = date;
-    this.task = task;
-  }
+  String? date;
+  int? isCompleted;
+
+  ToDoModel({
+    this.id,
+    this.task,
+    this.date,
+    this.isCompleted,
+  });
+
+  factory ToDoModel.fromJson(Map<String, dynamic> json) => ToDoModel(
+        id: json["id"],
+        task: json["task"],
+        date: json["date"],
+        isCompleted: json["isCompleted"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "task": task,
+        "date": date,
+        "isCompleted": isCompleted,
+      };
 }

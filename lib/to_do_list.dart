@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:to_do_app/to_do_io.dart';
 import 'package:to_do_app/to_do_model.dart';
 import 'package:intl/intl.dart';
 
@@ -10,11 +11,12 @@ class To_Do_List extends StatefulWidget {
 }
 
 class _To_Do_ListState extends State<To_Do_List> {
-  var list = <toDoModel>[];
+  var list = <ToDoModel>[];
   var textcontroller = TextEditingController();
   var searchController = TextEditingController();
   String selectedDate = DateTime.now.toString();
   var simpleDateFormat = DateFormat("dd/MMM/yyyy");
+  TodoDbIO todoDbIO = TodoDbIO();
   void _showDialogFunction() {
     selectedDate = simpleDateFormat.format(DateTime.now());
     showDialog(
@@ -49,8 +51,16 @@ class _To_Do_ListState extends State<To_Do_List> {
                   OutlinedButton(
                       onPressed: () {
                         if (textcontroller.text.toString().isNotEmpty) {
-                          list.add(toDoModel(
-                              "date", textcontroller.text.toString()));
+                          var toDoModel = ToDoModel(
+                              isCompleted: 0,
+                              date: selectedDate,
+                              task: textcontroller.text.toString());
+                          //database store
+                          todoDbIO.insertIntoTaskTable(toDoModel);
+                          // list.add(ToDoModel(
+                          //     isCompleted: 0,
+                          //     date: DateTime.now().toString(),
+                          //     task: textcontroller.text.toString()));
                           Navigator.of(context).pop();
                           setState(() {});
                         }
