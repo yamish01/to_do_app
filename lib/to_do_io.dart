@@ -34,4 +34,10 @@ class TodoDbIO {
     await db!.update(ToDoDb.instance.TodoTableName, toDoModel.toJson(),
         where: " id = ? ", whereArgs: [id]);
   }
+
+  void deletedTodo(ToDoModel toDoModel, int id) async {
+    Database? db = await databaseProvider!.database;
+    await db!
+        .delete(ToDoDb.instance.TodoTableName, where: "id=?", whereArgs: [id]);
+  }
 }
