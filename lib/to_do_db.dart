@@ -1,5 +1,7 @@
+import "package:flutter/foundation.dart";
 import "package:sqflite/sqflite.dart";
 import "package:path/path.dart";
+import "package:sqflite_common_ffi_web/sqflite_ffi_web.dart";
 
 class ToDoDb {
   ToDoDb._privateConstructor();
@@ -22,8 +24,14 @@ class ToDoDb {
 
   Future<Database> initiateDatabase() async {
     print("in database intialise method");
-    final path = await getDatabasesPath();
+    var path = await getDatabasesPath();
     var database;
+
+    if (kIsWeb) {
+      // Change default factory on the web
+      databaseFactory = databaseFactoryFfiWeb;
+      path = _databaseName;
+    }
     try {
       database = openDatabase(join(path, _databaseName),
           version: 1, onConfigure: _onConfigure, onCreate: (((db, version) {

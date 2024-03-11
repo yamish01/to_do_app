@@ -37,7 +37,7 @@ class TodoDbIO {
 
   void deletedTodo(ToDoModel toDoModel, int id) async {
     Database? db = await databaseProvider!.database;
-    await db!
-        .delete(ToDoDb.instance.TodoTableName, where: "id=?", whereArgs: [id]);
+    await db!.delete(ToDoDb.instance.TodoTableName,
+        where: " id = ? ", whereArgs: [id]);
   }
 }
